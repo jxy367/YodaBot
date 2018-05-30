@@ -19,7 +19,11 @@ def request(url):
     image_types = ['jpg', 'jpeg', 'png', 'gif', 'application']
 
     test_response = requests.post(url)
-    content_type = test_response.headers['Content-Type']
+    content_type = ''
+    try:
+        content_type = test_response.headers['Content-Type']
+    except KeyError:
+        return ""
     print(content_type)
     if any(ext in content_type for ext in image_types):
         print("requesting")
