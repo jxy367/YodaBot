@@ -16,7 +16,7 @@ client = discord.Client()
 def request(url):
     url_is_image = False
     descriptions = ""
-    image_types = ['jpg', 'jpeg', 'png', 'gif', ]
+    image_types = ['jpg', 'jpeg', 'png', 'gif', 'html']
 
     test_response = requests.post(url)
     content_type = test_response.headers['Content-Type']
