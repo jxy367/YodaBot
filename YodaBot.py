@@ -73,6 +73,12 @@ async def on_message(message):
     #print(all_descriptions)
     if ("yoda" in all_descriptions.lower()) or ("yoda" in message.content.lower()):
         await message.channel.send("That's racist!")
+        await message.add_reaction("🇷")
+        await message.add_reaction("🇦")
+        await message.add_reaction("🇨")
+        await message.add_reaction("🇮")
+        await message.add_reaction("🇸")
+        await message.add_reaction("🇹")
 
 
 @client.event
