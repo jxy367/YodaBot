@@ -14,7 +14,7 @@ client = discord.Client()
 
 
 def request(url):
-    print("requesting")
+    #print("requesting")
     request_list = []
     image_data = base64.b64encode(requests.get(url).content).decode('UTF-8')
 
@@ -34,7 +34,7 @@ def request(url):
     with open('hold.txt', 'w') as hold:
         json.dump({'requests': request_list}, hold)
     data = open('hold.txt', 'rb').read()
-    print("post")
+    #print("post")
     response = requests.post(url='https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY,
                              data=data,
                              headers={'Content-Type': 'application/json'})
@@ -70,6 +70,9 @@ async def background_update():
 
 @client.event
 async def on_message(message):
+    if message.author.bot:
+        return
+    
     all_descriptions = ""
 
     if message.attachments is not None:
