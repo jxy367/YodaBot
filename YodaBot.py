@@ -23,7 +23,7 @@ def request(url):
     feature_json_obj = []
     feature_json_obj.append({
         'type': 'WEB_DETECTION',
-        'maxResults': 4,
+        'maxResults': 10,
     })
 
     request_list.append({
