@@ -45,7 +45,7 @@ def request(url):
     for webEntity in response_data['responses'][0]['webDetection']['webEntities']:
         if 'description' in webEntity.keys():
             descriptions = descriptions + webEntity['description'] + " "
-
+    print(descriptions)
     return descriptions
 
 
