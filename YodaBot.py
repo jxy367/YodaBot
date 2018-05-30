@@ -14,13 +14,6 @@ client = discord.Client()
 
 
 def request(url):
-    print("requesting")
-    """Translates the input file into a json output file.
-
-    Args:
-        input_file: a file object, containing lines of input to convert.
-        output_filename: the name of the file to output the json to.
-    """
     request_list = []
     image_data = base64.b64encode(requests.get(url).content).decode('UTF-8')
 
