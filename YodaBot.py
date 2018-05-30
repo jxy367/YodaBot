@@ -7,6 +7,7 @@ import argparse
 import base64
 import json
 import sys
+import asyncio
 import requests
 
 API_KEY = 'AIzaSyByRb53RMSFPVw4gkR4GlGvkP6P7VaFicc'
@@ -56,6 +57,22 @@ def request(url):
     return descriptions
 
 
+async def reset_display_name():
+    for changed_guild in client.guilds:
+        if changed_guild.me.display_name != "Moist Crab":
+            print(changed_guild.name)
+            print(changed_guild.me.display_name)
+            print("---")
+            await changed_guild.me.edit(nick=None)
+
+
+async def background_update():
+    await client.wait_until_ready()
+    while not client.is_closed():
+        await reset_display_name()
+        await asyncio.sleep(60)
+
+
 # Standard bot stuff
 
 
@@ -87,5 +104,6 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+    client.loop.create_task(background_update())
 
 client.run(TOKEN)
