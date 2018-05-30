@@ -15,8 +15,8 @@ config_vars_data = requests.post(url='https://api.heroku.com/apps/$yoda-bot-disc
 print(config_vars_data)
 API_KEY = 'AIzaSyByRb53RMSFPVw4gkR4GlGvkP6P7VaFicc'
 TOKEN = 'NDQ4OTM4MjE0ODE3MDA1NTY4.De_-5g.a5AtlGcvogheQm_tyHGY-FSAojM'
-API_KEY = os.getenv('API_KEY')
-TOKEN = os.getenv('TOKEN')
+API_KEY = os.environ.get('API_KEY')
+TOKEN = os.environ.get('TOKEN')
 print(API_KEY)
 print(TOKEN)
 client = discord.Client()
