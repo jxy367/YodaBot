@@ -68,15 +68,21 @@ async def background_update():
 
 @client.event
 async def on_message(message):
+    if message.author.bot:
+        return
+
     all_descriptions = ""
+
     if message.attachments is not None:
         for attachment in message.attachments:
             descriptions = request(attachment.proxy_url)
             all_descriptions = all_descriptions + descriptions + " "
+
     if message.embeds is not None:
         for embed in message.embeds:
             descriptions = request(embed.url)
             all_descriptions = all_descriptions + descriptions + " "
+            
     #print(all_descriptions)
     if ("yoda" in all_descriptions.lower()) or ("yoda" in message.content.lower()):
         await message.channel.send("That's racist!")
