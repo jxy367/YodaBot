@@ -1,22 +1,13 @@
-import urllib  # install urllib2 and urllib3
-import base64
 import discord
-from google.cloud import vision
-from google.cloud.vision import types
-import argparse
+import asyncio
+
 import base64
 import json
-import sys
 import os
-import asyncio
 import requests
 
-API_KEY = 'AIzaSyByRb53RMSFPVw4gkR4GlGvkP6P7VaFicc'
-TOKEN = 'NDQ4OTM4MjE0ODE3MDA1NTY4.De_-5g.a5AtlGcvogheQm_tyHGY-FSAojM'
 API_KEY = os.environ.get('API_KEY')
 TOKEN = os.environ.get('TOKEN')
-print(API_KEY)
-print(TOKEN)
 client = discord.Client()
 
 # The actual http request
