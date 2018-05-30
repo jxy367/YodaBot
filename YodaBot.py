@@ -103,7 +103,8 @@ async def on_message(message):
             for embed in message.embeds:
                 descriptions = request(embed.url)
                 all_descriptions = all_descriptions + descriptions + " "
-        if "yoda" in all_descriptions.lowers():
+
+        if "yoda" in all_descriptions.lower():
             has_yoda = True
 
     if has_yoda:
