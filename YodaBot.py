@@ -14,40 +14,48 @@ client = discord.Client()
 
 
 def request(url):
-    #print("requesting")
-    request_list = []
-    image_data = base64.b64encode(requests.get(url).content).decode('UTF-8')
-
-    content_json_obj = {'content': image_data}
-
-    feature_json_obj = []
-    feature_json_obj.append({
-        'type': 'WEB_DETECTION',
-        'maxResults': 10,
-    })
-
-    request_list.append({
-        'features': feature_json_obj,
-        'image': content_json_obj,
-    })
-
-    with open('hold.txt', 'w') as hold:
-        json.dump({'requests': request_list}, hold)
-    data = open('hold.txt', 'rb').read()
-    #print("post")
-    response = requests.post(url='https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY,
-                             data=data,
-                             headers={'Content-Type': 'application/json'})
-    print("received data")
-    response_data = json.loads(response.text)
-
+    url_is_image = False
     descriptions = ""
-    try:
-        for webEntity in response_data['responses'][0]['webDetection']['webEntities']:
-            if 'description' in webEntity.keys():
-                descriptions = descriptions + webEntity['description'] + " "
-    except KeyError:
+    image_types = ['jpg', 'jpeg', 'png', 'gif', ]
+
+    test_response = requests.post(url)
+    content_type = test_response.headers['Content-Type']
+    print(content_type)
+    if any(ext in content_type for ext in image_types):
+        print("requesting")
+        request_list = []
+        image_data = base64.b64encode(requests.get(url).content).decode('UTF-8')
+
+        content_json_obj = {'content': image_data}
+
+        feature_json_obj = []
+        feature_json_obj.append({
+            'type': 'WEB_DETECTION',
+            'maxResults': 10,
+        })
+
+        request_list.append({
+            'features': feature_json_obj,
+            'image': content_json_obj,
+        })
+
+        with open('hold.txt', 'w') as hold:
+            json.dump({'requests': request_list}, hold)
+        data = open('hold.txt', 'rb').read()
+        #print("post")
+        response = requests.post(url='https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY,
+                                 data=data,
+                                 headers={'Content-Type': 'application/json'})
+        print("received data")
+        response_data = json.loads(response.text)
+
         descriptions = ""
+        try:
+            for webEntity in response_data['responses'][0]['webDetection']['webEntities']:
+                if 'description' in webEntity.keys():
+                    descriptions = descriptions + webEntity['description'] + " "
+        except KeyError:
+            descriptions = ""
     print(descriptions)
     return descriptions
 
