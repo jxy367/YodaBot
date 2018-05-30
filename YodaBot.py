@@ -42,9 +42,12 @@ def request(url):
     response_data = json.loads(response.text)
 
     descriptions = ""
-    for webEntity in response_data['responses'][0]['webDetection']['webEntities']:
-        if 'description' in webEntity.keys():
-            descriptions = descriptions + webEntity['description'] + " "
+    try:
+        for webEntity in response_data['responses'][0]['webDetection']['webEntities']:
+            if 'description' in webEntity.keys():
+                descriptions = descriptions + webEntity['description'] + " "
+    except KeyError:
+        descriptions = ""
     print(descriptions)
     return descriptions
 
@@ -72,7 +75,7 @@ async def background_update():
 async def on_message(message):
     if message.author.bot:
         return
-    
+
     all_descriptions = ""
 
     if message.attachments is not None:
