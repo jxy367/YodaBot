@@ -88,20 +88,25 @@ async def on_message(message):
     if message.author.bot:
         return
 
-    all_descriptions = ""
+    has_yoda = False
+    if "yoda" in message.content.lower():
+        has_yoda = True
+    else:
+        all_descriptions = ""
 
-    if message.attachments is not None:
-        for attachment in message.attachments:
-            descriptions = request(attachment.proxy_url)
-            all_descriptions = all_descriptions + descriptions + " "
+        if message.attachments is not None:
+            for attachment in message.attachments:
+                descriptions = request(attachment.proxy_url)
+                all_descriptions = all_descriptions + descriptions + " "
 
-    if message.embeds is not None:
-        for embed in message.embeds:
-            descriptions = request(embed.url)
-            all_descriptions = all_descriptions + descriptions + " "
+        if message.embeds is not None:
+            for embed in message.embeds:
+                descriptions = request(embed.url)
+                all_descriptions = all_descriptions + descriptions + " "
+        if "yoda" in all_descriptions.lowers():
+            has_yoda = True
 
-    #print(all_descriptions)
-    if ("yoda" in all_descriptions.lower()) or ("yoda" in message.content.lower()):
+    if has_yoda:
         await message.channel.send("That's racist!")
         await message.add_reaction("🇷")
         await message.add_reaction("🇦")
