@@ -14,6 +14,7 @@ client = discord.Client()
 
 
 def request(url):
+    print("requesting")
     """Translates the input file into a json output file.
 
     Args:
