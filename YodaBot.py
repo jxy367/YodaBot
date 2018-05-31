@@ -10,6 +10,10 @@ API_KEY = os.environ.get('API_KEY')
 TOKEN = os.environ.get('TOKEN')
 client = discord.Client()
 
+# Information for cooldown
+on_cooldown = False
+cooldown_time = 60
+
 # The actual http request
 
 
@@ -80,12 +84,27 @@ async def background_update():
         await asyncio.sleep(60)
 
 
+async def cooldown():
+    global on_cooldown
+    global cooldown_time
+    await client.wait_until_ready()
+    while not client.is_closed():
+        if on_cooldown:
+            await asyncio.sleep(cooldown_time)
+            on_cooldown = False
+        else:
+            await asyncio.sleep(1)
+
+
 # Standard bot stuff
 
 
 @client.event
 async def on_message(message):
     if message.author.bot:
+        return
+
+    if on_cooldown:
         return
 
     has_yoda = False
@@ -124,5 +143,6 @@ async def on_ready():
     print(client.user.id)
     print('------')
     client.loop.create_task(background_update())
+    client.loop.create_task(cooldown())
 
 client.run(TOKEN)
