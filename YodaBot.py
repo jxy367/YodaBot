@@ -101,6 +101,7 @@ async def cooldown():
 
 @client.event
 async def on_message(message):
+    global on_cooldown
     if message.author.bot:
         return
 
@@ -126,6 +127,7 @@ async def on_message(message):
         if "yoda" in all_descriptions.lower():
             has_yoda = True
 
+
     if has_yoda:
         await message.channel.send("That's racist!")
         await message.add_reaction("🇷")
@@ -134,6 +136,7 @@ async def on_message(message):
         await message.add_reaction("🇮")
         await message.add_reaction("🇸")
         await message.add_reaction("🇹")
+        on_cooldown = True
 
 
 @client.event
