@@ -23,6 +23,7 @@ def request(url):
     image_types = ['jpg', 'jpeg', 'png', 'gif', 'application']
 
     test_response = requests.post(url)
+    print(test_response)
     content_type = ''
     try:
         content_type = test_response.headers['Content-Type']
@@ -136,7 +137,7 @@ async def on_message(message):
         await message.add_reaction("🇮")
         await message.add_reaction("🇸")
         await message.add_reaction("🇹")
-        on_cooldown = True
+
 
 
 @client.event
