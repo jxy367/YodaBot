@@ -23,7 +23,6 @@ def request(url):
     image_types = ['jpg', 'jpeg', 'png', 'gif', 'application']
 
     test_response = requests.post(url)
-    print(test_response)
     content_type = ''
     try:
         content_type = test_response.headers['Content-Type']
@@ -55,6 +54,7 @@ def request(url):
         response = requests.post(url='https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY,
                                  data=data,
                                  headers={'Content-Type': 'application/json'})
+        print(response)
         print("received data")
         response_data = json.loads(response.text)
 
