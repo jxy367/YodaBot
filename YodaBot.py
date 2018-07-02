@@ -54,10 +54,9 @@ def request(url):
         response = requests.post(url='https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY,
                                  data=data,
                                  headers={'Content-Type': 'application/json'})
-        print(response)
         print("received data")
         response_data = json.loads(response.text)
-
+        print(response_data)
         descriptions = ""
         try:
             for webEntity in response_data['responses'][0]['webDetection']['webEntities']:
