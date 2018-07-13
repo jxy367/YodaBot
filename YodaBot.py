@@ -21,7 +21,7 @@ def request(url):
     print("Starting request")
     url_is_image = False
     descriptions = ""
-    image_types = ['jpg', 'jpeg', 'png', 'gif', 'application']
+    image_types = ['jpg', 'jpeg', 'png', 'gif', 'application', 'html']
 
     test_response = requests.post(url)
     content_type = ''
