@@ -18,6 +18,7 @@ cooldown_time = 20
 
 
 def request(url):
+    print("Starting request")
     url_is_image = False
     descriptions = ""
     image_types = ['jpg', 'jpeg', 'png', 'gif', 'application']
@@ -109,7 +110,7 @@ async def on_message(message):
         return
 
     guild_cooldown = on_cooldown[guild_id] <= 0
-    if guild_cooldown:
+    if not guild_cooldown:
         return
 
     has_yoda = False
