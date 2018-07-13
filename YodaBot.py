@@ -57,7 +57,7 @@ def request(url):
                                  headers={'Content-Type': 'application/json'})
         print("received data")
         response_data = json.loads(response.text)
-        print(response_data)
+        #print(response_data)
         descriptions = ""
         try:
             for webEntity in response_data['responses'][0]['webDetection']['webEntities']:
