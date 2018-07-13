@@ -101,7 +101,7 @@ async def cooldown():
 @client.event
 async def on_message(message):
     global on_cooldown
-    guild_id = message.channel.server.id
+    guild_id = message.guild
     if guild_id not in on_cooldown:
         on_cooldown[guild_id] = 0
 
