@@ -11,8 +11,8 @@ TOKEN = os.environ.get('TOKEN')
 client = discord.Client()
 
 # Information for cooldown
-on_cooldown = False
-cooldown_time = 60
+on_cooldown = {}
+cooldown_time = 20
 
 # The actual http request
 
@@ -86,14 +86,13 @@ async def background_update():
 
 async def cooldown():
     global on_cooldown
-    global cooldown_time
     await client.wait_until_ready()
     while not client.is_closed():
-        if on_cooldown:
-            await asyncio.sleep(cooldown_time)
-            on_cooldown = False
-        else:
-            await asyncio.sleep(1)
+        for guild in on_cooldown:
+            on_cooldown[guild] = on_cooldown[guild] - 1
+            if on_cooldown[guild] < 0:
+                on_cooldown[guild] = 0
+        await asyncio.sleep(1)
 
 
 # Standard bot stuff
@@ -102,10 +101,15 @@ async def cooldown():
 @client.event
 async def on_message(message):
     global on_cooldown
+    guild_id = message.server
+    if guild_id not in on_cooldown:
+        on_cooldown[guild_id] = 0
+
     if message.author.bot:
         return
 
-    if on_cooldown:
+    guild_cooldown = on_cooldown[guild_id] <= 0
+    if guild_cooldown:
         return
 
     has_yoda = False
@@ -127,6 +131,7 @@ async def on_message(message):
         if "yoda" in all_descriptions.lower():
             has_yoda = True
 
+        on_cooldown[guild_id] = cooldown_time
 
     if has_yoda:
         await message.channel.send("That's racist!")
