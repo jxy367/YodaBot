@@ -121,7 +121,7 @@ async def on_message(message):
 
         if message.attachments is not None:
             for attachment in message.attachments:
-                descriptions = request(attachment.proxy_url)
+                descriptions = request(attachment.url)
                 all_descriptions = all_descriptions + descriptions + " "
 
         if message.embeds is not None:
